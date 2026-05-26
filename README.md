@@ -49,3 +49,16 @@ L'application repose sur le design pattern **MVC (Modèle-Vue-Contrôleur)** mon
 - **Models/ :** Contient la définition de la structure des données (Produits, Catégories, Transactions).
 - **Controllers/ :** Contient la logique métier et fait le lien entre la base de données (AppDbContext) et les Vues.
 - **Views/ :** Contient l'interface utilisateur en HTML, CSS (Vanilla) et Javascript, générée via Razor (`.cshtml`).
+
+## 📸 Captures d'écran
+
+Voici quelques aperçus de l'application :
+
+### Tableau de Bord
+![Tableau de Bord](./dashboard.png)
+
+### Inventaire
+![Inventaire](./inventaire.png)
+
+### Formulaire Produit
+![Formulaire](./form.png)

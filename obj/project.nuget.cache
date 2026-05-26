@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "U2LpK0zWTXI=",
+  "dgSpecHash": "5XmQ5ty4qWI=",
   "success": true,
-  "projectFilePath": "C:\\Users\\walid\\Desktop\\dotnet\\StockBoutique\\StockBoutique.csproj",
+  "projectFilePath": "C:\\dev\\StockBoutique\\StockBoutique.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\walid\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\walid\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",

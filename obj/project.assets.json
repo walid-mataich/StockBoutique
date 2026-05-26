@@ -2178,11 +2178,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\walid\\Desktop\\dotnet\\StockBoutique\\StockBoutique.csproj",
+      "projectUniqueName": "C:\\dev\\StockBoutique\\StockBoutique.csproj",
       "projectName": "StockBoutique",
-      "projectPath": "C:\\Users\\walid\\Desktop\\dotnet\\StockBoutique\\StockBoutique.csproj",
+      "projectPath": "C:\\dev\\StockBoutique\\StockBoutique.csproj",
       "packagesPath": "C:\\Users\\walid\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\walid\\Desktop\\dotnet\\StockBoutique\\obj\\",
+      "outputPath": "C:\\dev\\StockBoutique\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\walid\\AppData\\Roaming\\NuGet\\NuGet.Config",
