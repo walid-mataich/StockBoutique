@@ -1,0 +1,66 @@
+@model IEnumerable<StockBoutique.Models.StockTransaction>
+
+@{
+    ViewData["Title"] = "Tableau de Bord";
+}
+
+<div class="glass-panel" style="margin-bottom: 2rem;">
+    <h2>Tableau de Bord - Vue d'ensemble</h2>
+    <p style="color: var(--text-secondary)">Bienvenue sur l'application de gestion de stock de votre boutique.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <div class="glass-panel" style="border-left: 4px solid var(--primary-color)">
+        <h3 style="margin-top: 0; color: var(--text-secondary); font-size: 1rem;">Produits Actifs</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; margin: 0;">@ViewBag.TotalProducts</p>
+    </div>
+    
+    <div class="glass-panel" style="border-left: 4px solid var(--success-color)">
+        <h3 style="margin-top: 0; color: var(--text-secondary); font-size: 1rem;">Valeur du Stock</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; margin: 0;">@ViewBag.TotalStockValue.ToString("N2") Dhs</p>
+    </div>
+    
+    <div class="glass-panel" style="border-left: 4px solid var(--danger-color)">
+        <h3 style="margin-top: 0; color: var(--text-secondary); font-size: 1rem;">Alertes Stock Faible</h3>
+        <p style="font-size: 2.5rem; font-weight: 700; margin: 0; color: var(--danger-color)">@ViewBag.LowStockProducts</p>
+    </div>
+</div>
+
+<div class="glass-panel">
+    <h3>Mouvements Récents</h3>
+    <table class="glass-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Produit</th>
+                <th>Type</th>
+                <th>Quantité</th>
+                <th>Motif</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Date.ToLocalTime().ToString("g")</td>
+                    <td>@(item.Product?.Name ?? "Inconnu")</td>
+                    <td>
+                        @if (item.Type == "In")
+                        {
+                            <span style="color: var(--success-color); font-weight: bold;">+ Entrée</span>
+                        }
+                        else
+                        {
+                            <span style="color: var(--danger-color); font-weight: bold;">- Sortie</span>
+                        }
+                    </td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Reason</td>
+                </tr>
+            }
+            @if(!Model.Any()) {
+                <tr><td colspan="5" style="text-align:center; color:var(--text-secondary)">Aucun mouvement récent.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

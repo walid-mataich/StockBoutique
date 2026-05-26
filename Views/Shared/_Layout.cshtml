@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - StockBoutique</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="navbar-glass">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">StockBoutique</a>
+        <div class="nav-links">
+            <a asp-area="" asp-controller="Home" asp-action="Index">Tableau de Bord</a>
+            <a asp-area="" asp-controller="Products" asp-action="Index">Inventaire</a>
+        </div>
+    </nav>
+    <div class="container fade-in">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

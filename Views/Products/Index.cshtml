@@ -1,0 +1,113 @@
+@model IEnumerable<StockBoutique.Models.Product>
+
+@{
+    ViewData["Title"] = "Inventaire";
+}
+
+<div class="glass-panel" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h2 style="margin: 0;">Gestion de l'Inventaire</h2>
+        <p style="color: var(--text-secondary); margin: 5px 0 0 0;">Gérez vos produits et vos stocks</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">+ Nouveau Produit</a>
+</div>
+
+<div class="glass-panel">
+    <table class="glass-table">
+        <thead>
+            <tr>
+                <th>Réf (SKU)</th>
+                <th>Nom</th>
+                <th>Catégorie</th>
+                <th>Prix</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td><span style="color: var(--text-secondary); font-family: monospace;">@item.SKU</span></td>
+                    <td style="font-weight: 500;">@item.Name</td>
+                    <td>@(item.Category?.Name)</td>
+                    <td>@item.Price.ToString("N2") Dhs</td>
+                    <td>
+                        @if (item.QuantityInStock <= 5) {
+                            <span class="badge badge-low-stock">@item.QuantityInStock (Faible)</span>
+                        } else {
+                            <span class="badge badge-in-stock">@item.QuantityInStock</span>
+                        }
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="openModal('addStockModal', @item.Id, '@item.Name')" class="btn btn-sm btn-success" style="font-size: 0.75rem;">+ Stock</button>
+                            <button onclick="openModal('removeStockModal', @item.Id, '@item.Name')" class="btn btn-sm btn-danger" style="font-size: 0.75rem;">- Stock</button>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm" style="background: rgba(0,0,0,0.05); color: var(--text-primary); font-size: 0.75rem;">Modifier</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+            @if(!Model.Any()) {
+                <tr><td colspan="6" style="text-align:center; color:var(--text-secondary)">Aucun produit dans l'inventaire.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Stock Modal (Simplified using native JS dialog or just a hidden div overlay) -->
+<div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); backdrop-filter:blur(5px); z-index:2000; align-items:center; justify-content:center;">
+    <div class="glass-panel" style="width: 400px; max-width: 90%;">
+        <h3 id="modalTitle" style="margin-top:0">Action Stock</h3>
+        <p id="modalProductName" style="color: var(--text-secondary); margin-bottom: 20px;"></p>
+        
+        <form id="stockForm" method="post">
+            <input type="hidden" id="modalProductId" name="id" />
+            
+            <div class="form-group">
+                <label>Quantité</label>
+                <input type="number" name="quantity" class="form-control" required min="1" value="1" />
+            </div>
+            
+            <div class="form-group">
+                <label>Motif</label>
+                <input type="text" name="reason" class="form-control" placeholder="Ex: Réassort, Vente, Perte..." required />
+            </div>
+            
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button type="button" class="btn" style="background: rgba(0,0,0,0.05); color:var(--text-primary);" onclick="closeModal()">Annuler</button>
+                <button type="submit" id="modalSubmitBtn" class="btn btn-primary">Confirmer</button>
+            </div>
+            @Html.AntiForgeryToken()
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function openModal(action, id, name) {
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('modalProductId').value = id;
+            document.getElementById('modalProductName').innerText = name;
+            
+            var form = document.getElementById('stockForm');
+            var btn = document.getElementById('modalSubmitBtn');
+            var title = document.getElementById('modalTitle');
+            
+            if(action === 'addStockModal') {
+                form.action = '/Products/AddStock';
+                btn.className = 'btn btn-success';
+                btn.innerText = 'Ajouter';
+                title.innerText = 'Ajouter au stock';
+            } else {
+                form.action = '/Products/RemoveStock';
+                btn.className = 'btn btn-danger';
+                btn.innerText = 'Retirer';
+                title.innerText = 'Retirer du stock';
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+    </script>
+}

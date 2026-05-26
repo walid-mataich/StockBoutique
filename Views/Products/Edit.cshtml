@@ -1,0 +1,68 @@
+@model StockBoutique.Models.Product
+
+@{
+    ViewData["Title"] = "Modifier Produit";
+}
+
+<div class="glass-panel fade-in" style="max-width: 600px; margin: 0 auto;">
+    <h2 style="margin-top: 0;">Modifier le Produit</h2>
+    <hr style="border-color: var(--surface-border); margin-bottom: 20px;" />
+
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="form-group">
+            <label asp-for="Name">Nom du produit</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger" style="color:var(--danger-color); font-size:0.8rem"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SKU">Référence (SKU)</label>
+            <input asp-for="SKU" class="form-control" />
+            <span asp-validation-for="SKU" class="text-danger" style="color:var(--danger-color); font-size:0.8rem"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Description">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div class="form-group">
+                <label asp-for="Price">Prix unitaire (Dhs)</label>
+                <input asp-for="Price" type="number" step="0.01" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger" style="color:var(--danger-color); font-size:0.8rem"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="QuantityInStock">Stock Actuel</label>
+                <input asp-for="QuantityInStock" type="number" class="form-control" readonly style="background: rgba(0,0,0,0.03); color: #666;" title="Utilisez les actions de l'inventaire pour modifier le stock" />
+                <small style="color: var(--text-secondary)">Le stock se modifie via l'écran d'inventaire.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CategoryId">Catégorie</label>
+            <select asp-for="CategoryId" class="form-control">
+                @foreach(var cat in ViewBag.Categories) {
+                    if(Model.CategoryId == cat.Id) {
+                        <option value="@cat.Id" selected>@cat.Name</option>
+                    } else {
+                        <option value="@cat.Id">@cat.Name</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 30px;">
+            <input type="submit" value="Enregistrer les modifications" class="btn btn-primary" />
+            <a asp-action="Index" class="btn" style="background: rgba(0,0,0,0.05); color:var(--text-primary);">Retour</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
